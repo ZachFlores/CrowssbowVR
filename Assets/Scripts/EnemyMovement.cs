@@ -21,10 +21,12 @@ public class EnemyMovement : MonoBehaviour {
 
 		
 			if(navAgent.enabled != false)
-			navAgent.SetDestination (playerTransform.position);
+			    navAgent.SetDestination (playerTransform.position);
 
-		
-	}
+            
+
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -33,7 +35,6 @@ public class EnemyMovement : MonoBehaviour {
             gameObject.transform.parent = other.gameObject.transform.GetChild(0).transform;
             navAgent.enabled = false;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            GetComponent<Collider>().enabled = false;
         }
 
         
