@@ -16,25 +16,14 @@ public class Arrow : MonoBehaviour {
 		
 	}
 
-	void OnTriggerEnter(Collider col){
+	void OnCollisionEnter(Collision col){
 
-		if (col.gameObject.CompareTag ("Enemy")) {
+		if (col.gameObject.CompareTag ("Wall")) {
 
-            Vector3 tempVelocity = rb.velocity;
-			col.gameObject.GetComponent<Rigidbody> ().isKinematic = true;
-			col.gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
-			col.gameObject.transform.parent = attachPoint;
-			col.gameObject.tag = "Wall";
-            rb.velocity = tempVelocity;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
 
-		}
-
-		else if(col.gameObject.CompareTag("Wall")) {
-		
-			rb.velocity = new Vector3 (0, 0, 0);
-			rb.constraints = RigidbodyConstraints.FreezeAll;
-
-		}
+        }
+        
 
 	}
 }

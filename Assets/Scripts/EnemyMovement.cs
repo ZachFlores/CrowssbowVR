@@ -19,16 +19,26 @@ public class EnemyMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (gameObject.CompareTag ("Wall")) {
-
-			navAgent.enabled = false;
-
-		} 
-
-		else {
-			
+		
+			if(navAgent.enabled != false)
 			navAgent.SetDestination (playerTransform.position);
 
-		}
+		
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Arrow"))
+        {
+            gameObject.transform.parent = other.gameObject.transform.GetChild(0).transform;
+            navAgent.enabled = false;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            GetComponent<Collider>().enabled = false;
+        }
+
+        
+    }
 }
+
+
+ 
