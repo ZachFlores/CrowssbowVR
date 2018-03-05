@@ -5,55 +5,51 @@ using UnityEngine;
 public class GunController : MonoBehaviour {
 
 	public GameObject arrowPrefab;
-	public Transform arrowSpawnRight;
-	public Transform arrowSpawnLeft;
-	public VRTK.VRTK_ControllerEvents controllerEventRight;
-	public VRTK.VRTK_ControllerEvents controllerEventLeft;
-	bool canFireLeft, canFireRight;
-	private GameObject arrowRight;
-	private GameObject arrowLeft;
+    public Transform arrowSpawn;
+    public VRTK.VRTK_ControllerEvents controllerEvent;
+    private bool canFire;
+	private GameObject arrow;
+    [SerializeField]
+    private float timeBetweenShots;
+    private float countDownShots;
 	// Use this for initialization
 	void Start () {
-		canFireRight = true;
-		canFireLeft = true;
-		arrowRight = Instantiate (arrowPrefab, arrowSpawnRight);
-		arrowLeft = Instantiate (arrowPrefab, arrowSpawnLeft);
-
+		canFire = true;
+		arrow = Instantiate (arrowPrefab, arrowSpawn);
+        countDownShots = timeBetweenShots;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if (controllerEventRight.triggerPressed && canFireRight) {
+		if (controllerEvent.triggerPressed && canFire) {
 
-			arrowRight.transform.SetParent (null);
-			fire (arrowSpawnRight,arrowRight);
-			canFireRight = false;;
-
-		} 
-
-		else if (controllerEventLeft.triggerPressed&&canFireLeft) {
-
-			fire (arrowSpawnLeft,arrowLeft);
-			canFireLeft = false;
-		}
-
-		if (Input.GetKeyDown (KeyCode.R)) {
-
-			arrowRight = Instantiate (arrowPrefab, arrowSpawnRight);
-			canFireLeft = true;
-			canFireRight = true;
+			arrow.transform.SetParent (null);
+			fire (arrowSpawn,arrow);
 
 		}
+
+   
+
+        if (!canFire) {
+
+            countDownShots -= Time.deltaTime;
+            if(countDownShots <= 0)
+            {
+               arrow = Instantiate(arrowPrefab, arrowSpawn);
+                canFire = true;
+                countDownShots = timeBetweenShots;
+                Debug.Log(canFire);
+
+            }
+
+        }
 	}
 
 		public void fire(Transform muzzle, GameObject arrow){
 
 
-		arrow.GetComponent<Rigidbody> ().velocity = (muzzle.parent.forward) * 15.0f ;
-		Debug.Log (arrow.GetComponent<Rigidbody> ().velocity);
-		Debug.Log (muzzle.parent.forward);
-
-
-	}
+		arrow.GetComponent<Rigidbody> ().velocity = (muzzle.parent.forward) * 40.0f ;
+        canFire = false;
+    }
 }

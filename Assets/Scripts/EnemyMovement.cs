@@ -7,6 +7,7 @@ public class EnemyMovement : MonoBehaviour {
 
 	Transform playerTransform;
 	NavMeshAgent navAgent;
+    bool impaled;
 	// Use this for initialization
 	void Awake () {
 
@@ -30,11 +31,25 @@ public class EnemyMovement : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Arrow"))
         {
             gameObject.transform.parent = other.gameObject.transform.GetChild(0).transform;
             navAgent.enabled = false;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            impaled = true;
+        }
+
+        else if (other.CompareTag("Player"))
+        {
+
+            Destroy(gameObject);
+        }
+
+        else if (impaled && other.CompareTag("Wall" ))
+        {
+            gameObject.GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
         }
 
         
