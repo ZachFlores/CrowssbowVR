@@ -5,17 +5,24 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour {
 
-	Transform playerTransform;
-	NavMeshAgent navAgent;
-    bool impaled;
-    Animator anim;
-	// Use this for initialization
-	void Awake () {
+	private Transform playerTransform;
+	private NavMeshAgent navAgent;
+    private bool impaled;
+    private Animator anim;
+    private Rigidbody rb;
+    private Rigidbody rbParent;
+    private GameObject impalingArrow;
 
+    // Use this for initialization
+    void Awake () {
+
+        impaled = false;
 		playerTransform = GameObject.FindGameObjectWithTag ("Player").transform;
 		navAgent = GetComponent<NavMeshAgent> ();
         anim = GetComponentInChildren<Animator>();
         anim.SetBool("isDead", false);
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
         //test
 
 	}
@@ -37,11 +44,14 @@ public class EnemyMovement : MonoBehaviour {
 
         if (other.CompareTag("Arrow"))
         {
-            gameObject.transform.parent = other.gameObject.transform.GetChild(0).transform;
+            impalingArrow = other.gameObject;
+            gameObject.transform.parent =impalingArrow.transform.GetChild(0).transform;
             navAgent.enabled = false;
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            rb.isKinematic = false;
             anim.SetBool("isDead", true);
             impaled = true;
+            rbParent = impalingArrow.GetComponent<Rigidbody>();
         }
 
         else if (other.CompareTag("Player"))
@@ -52,8 +62,7 @@ public class EnemyMovement : MonoBehaviour {
 
         else if (impaled && other.CompareTag("Wall" ))
         {
-            gameObject.GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
+            rbParent.constraints = RigidbodyConstraints.FreezeAll;
         }
 
         

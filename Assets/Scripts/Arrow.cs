@@ -18,12 +18,10 @@ public class Arrow : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col){
 
-		if (col.gameObject.CompareTag ("Wall")) {
+        if (col.gameObject.CompareTag("Enemy"))
+        {
 
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-
+            GetComponent<Collider>().enabled = false;
         }
-        
-
 	}
 }

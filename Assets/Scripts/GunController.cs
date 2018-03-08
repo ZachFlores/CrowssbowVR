@@ -49,7 +49,7 @@ public class GunController : MonoBehaviour {
 		public void fire(Transform muzzle, GameObject arrow){
 
 
-		arrow.GetComponent<Rigidbody> ().velocity = (muzzle.parent.forward) * 40.0f ;
+		arrow.GetComponent<Rigidbody> ().velocity = (muzzle.parent.forward) * 10.0f ;
         canFire = false;
     }
 }
