@@ -8,11 +8,14 @@ public class EnemyMovement : MonoBehaviour {
 	Transform playerTransform;
 	NavMeshAgent navAgent;
     bool impaled;
+    Animator anim;
 	// Use this for initialization
 	void Awake () {
 
 		playerTransform = GameObject.FindGameObjectWithTag ("Player").transform;
 		navAgent = GetComponent<NavMeshAgent> ();
+        anim = GetComponentInChildren<Animator>();
+        anim.SetBool("isDead", false);
         //test
 
 	}
@@ -37,6 +40,7 @@ public class EnemyMovement : MonoBehaviour {
             gameObject.transform.parent = other.gameObject.transform.GetChild(0).transform;
             navAgent.enabled = false;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            anim.SetBool("isDead", true);
             impaled = true;
         }
 
