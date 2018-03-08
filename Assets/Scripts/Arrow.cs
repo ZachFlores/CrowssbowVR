@@ -5,10 +5,8 @@ using UnityEngine;
 public class Arrow : MonoBehaviour {
 
 	public Transform attachPoint;
-	private Rigidbody rb;
 	// Use this for initialization
 	void Start () {
-		rb = GetComponent<Rigidbody> ();
 	}
 	
 	// Update is called once per frame

@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
     private float mMaxHealth;
 
 
-    protected void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
 
         mCurrentHealth -= amount;

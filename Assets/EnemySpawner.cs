@@ -17,7 +17,5 @@ public class EnemySpawner : MonoBehaviour {
     {
         int location = Random.Range(0, spawnLocations.Length);
         Instantiate(enemyPrefab,spawnLocations[location]);
-
-
     }
 }
