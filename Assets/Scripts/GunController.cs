@@ -11,6 +11,8 @@ public class GunController : MonoBehaviour {
 	private GameObject arrow;
     [SerializeField]
     private float timeBetweenShots;
+    [SerializeField]
+    private float arrowSpeed;
     private float countDownShots;
 	// Use this for initialization
 	void Start () {
@@ -48,7 +50,7 @@ public class GunController : MonoBehaviour {
 
 		public void fire(Transform muzzle, GameObject arrow){
 
-
+       
 		arrow.GetComponent<Rigidbody> ().velocity = (muzzle.parent.forward) * 10.0f ;
         canFire = false;
     }
